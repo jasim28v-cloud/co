@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHΔDØW CORE | DARK CRAWLER V99</title>
+    <style>
+        :root {
+            --neon: #00ff41;
+            --bg: #000;
+            --accent: #ff003c;
+            --dark-gray: #0a0a0a;
+            --deep-purple: #4b0082;
+        }
+        body, html {
+            background-color: var(--bg);
+            color: var(--neon);
+            font-family: 'Consolas', 'Monaco', monospace;
+            margin: 0; padding: 0;
+            height: 100vh; overflow: hidden;
+            display: flex; flex-direction: column;
+        }
+        header {
+            background: #000; padding: 15px 25px;
+            border-bottom: 2px solid var(--neon);
+            display: flex; justify-content: space-between;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+            font-weight: bold; font-size: 0.9rem;
+        }
+        #main-view {
+            display: flex; flex-grow: 1; overflow: hidden;
+        }
+        #terminal {
+            flex-grow: 1; padding: 25px;
+            overflow-y: auto; background: radial-gradient(circle, #050505 0%, #000 100%);
+            display: flex; flex-direction: column; gap: 15px;
+        }
+        #crawler-sidebar {
+            width: 320px; border-left: 1px solid var(--neon);
+            background: #050505; padding: 20px;
+            display: flex; flex-direction: column; gap: 15px;
+        }
+        .msg { border-right: 3px solid transparent; padding-right: 15px; line-height: 1.6; }
+        .user-in { border-right-color: #fff; color: #fff; }
+        .core-out { border-right-color: var(--accent); background: rgba(255, 0, 60, 0.05); }
+        .dark-result {
+            border: 1px solid var(--deep-purple); background: rgba(75, 0, 130, 0.1);
+            padding: 10px; margin: 5px 0; font-size: 0.85rem; color: #d8b4fe;
+        }
+        .onion-link { color: #ff00ff; text-decoration: underline; font-family: monospace; }
+        footer {
+            padding: 20px; background: #000; border-top: 1px solid var(--neon);
+            display: flex; gap: 15px;
+        }
+        input {
+            flex-grow: 1; background: transparent; border: 1px solid var(--neon);
+            color: #fff; padding: 14px; outline: none; font-size: 1rem;
+        }
+        .btn {
+            background: var(--neon); color: #000; border: none;
+            padding: 0 35px; cursor: pointer; font-weight: bold; transition: 0.3s;
+        }
+        .btn:hover { background: var(--accent); color: #fff; }
+        .pulse { animation: blink 1.5s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    </style>
+</head>
+<body>
+
+<header>
+    <div><span class="pulse">●</span> CRAWLER_STATUS: <span style="color:var(--accent)">ACTIVE_BEYOND_FIREWALL</span></div>
+    <div id="sync">LAST_SYNC: 0.00ms</div>
+</header>
+
+<div id="main-view">
+    <div id="terminal">
+        <div class="msg core-out"><strong>[SYSTEM]</strong>: تم تفعيل "الزاحف المظلم" (Dark Crawler). ابحث عن أي موقع .onion أو قاعدة بيانات مسربة وسأقوم بجلبها لك من Void Database.</div>
+    </div>
+
+    <div id="crawler-sidebar">
+        <div style="border: 1px solid var(--deep-purple); padding: 10px;">
+            <strong style="color: var(--deep-purple);">LIVE ONION CRAWL:</strong>
+            <div id="live-links" style="font-size: 0.75rem; margin-top: 10px;">
+                Searching for entry nodes...
+            </div>
+        </div>
+        <div style="margin-top: auto; font-size: 0.7rem; color: #444;">
+            TOR_CIRCUIT: [US -> DE -> RU]<br>
+            SECURITY: OMNI_VULN_SHIELD
+        </div>
+    </div>
+</div>
+
+<footer>
+    <input type="text" id="shell" placeholder="أدخل اسم الموقع المظلم أو نوع الثغرة..." autofocus>
+    <button class="btn" onclick="execute()">RUN CRAWL</button>
+</footer>
+
+<script>
+    const terminal = document.getElementById('terminal');
+    const shell = document.getElementById('shell');
+    const liveLinks = document.getElementById('live-links');
+
+    // Persistence Logic
+    window.onload = () => {
+        const saved = localStorage.getItem('shadow_crawler_logs');
+        if(saved) terminal.innerHTML += saved;
+        simulateTraffic();
+    };
+
+    function simulateTraffic() {
+        const sites = ["shadow_market.onion", "hidden_wiki_v9.onion", "dump_leaks_2026.onion", "secure_drop.onion"];
+        setInterval(() => {
+            const site = sites[Math.floor(Math.random() * sites.length)];
+            liveLinks.innerHTML = `[FOUND]: <span class="onion-link">${site}</span><br>` + liveLinks.innerHTML.substring(0, 100);
+        }, 3000);
+    }
+
+    function addEntry(type, text, isDark = false) {
+        const div = document.createElement('div');
+        div.className = `msg ${type === 'user' ? 'user-in' : 'core-out'}`;
+        if(isDark) div.className += ' dark-result';
+        
+        const sender = type === 'user' ? '>> ROOT' : '[CRAWLER_V99]';
+        div.innerHTML = `<strong>${sender}</strong>: ${text}`;
+        
+        terminal.appendChild(div);
+        terminal.scrollTop = terminal.scrollHeight;
+        localStorage.setItem('shadow_crawler_logs', terminal.innerHTML);
+    }
+
+    function execute() {
+        const val = shell.value.trim();
+        if(!val) return;
+
+        addEntry('user', val);
+        
+        setTimeout(() => {
+            const response = darkSearchLogic(val);
+            addEntry('core', response.msg, response.isDark);
+        }, 800);
+
+        shell.value = '';
+    }
+
+    function darkSearchLogic(query) {
+        const q = query.toLowerCase();
+        if(q.includes("onion") || q.includes("موقع") || q.includes("مظلم")) {
+            return { msg: `تم العثور على روابط متطابقة في الشبكة المظلمة:<br><span class="onion-link">http://v3shadow${Math.random().toString(36).substring(7)}.onion</span><br>الحالة: نشط (Active). جاري فحص شهادة الأمان...`, isDark: true };
+        }
+        if(q.includes("تسريب") || q.includes("leak") || q.includes("بيانات")) {
+            return { msg: `[ALERT]: تم العثور على قاعدة بيانات مسربة بحجم 4.2GB. المحتويات: Emails, Hashes, IP_Logs. جاري تجهيز رابط التحميل الآمن...`, isDark: true };
+        }
+        return { msg: `تم إرسال الاستعلام لـ [${query}] إلى كافة العقد. النتيجة: استجابة إيجابية من خادم السيرفر المظلم.`, isDark: false };
+    }
+
+    shell.addEventListener('keypress', (e) => { if(e.key === 'Enter') execute(); });
+</script>
+
+</body>
+</html>
