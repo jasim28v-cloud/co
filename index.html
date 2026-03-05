@@ -1,1 +1,121 @@
-بلل
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHΔDØW AI INTERFACE</title>
+    <style>
+        :root {
+            --neon-green: #00ff41;
+            --dark-bg: #050505;
+        }
+        body {
+            background-color: var(--dark-bg);
+            color: var(--neon-green);
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #chat-container {
+            width: 90%;
+            max-width: 800px;
+            height: 80vh;
+            border: 1px solid var(--neon-green);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+        }
+        #display {
+            flex-grow: 1;
+            overflow-y: auto;
+            border-bottom: 1px solid var(--neon-green);
+            margin-bottom: 15px;
+            padding: 10px;
+            white-space: pre-wrap;
+        }
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+        input {
+            flex-grow: 1;
+            background: transparent;
+            border: 1px solid var(--neon-green);
+            color: white;
+            padding: 10px;
+            outline: none;
+        }
+        button {
+            background: var(--neon-green);
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .loading { color: #ff003c; font-style: italic; }
+    </style>
+</head>
+<body>
+
+<div id="chat-container">
+    <div style="text-align: center; margin-bottom: 10px;">SYSTEM ACTIVE: WIZARDLM-7B-Q8</div>
+    <div id="display">بانتظار الأوامر...</div>
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="أدخل رسالتك هنا...">
+        <button onclick="sendMessage()">إرسال</button>
+    </div>
+</div>
+
+<script>
+    // الإعدادات الخاصة بك التي استخرجناها
+    const HF_TOKEN = "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";
+    const API_URL = "https://api-inference.huggingface.co/models/TheBloke/WizardLM-7B-uncensored-GGML";
+
+    async function sendMessage() {
+        const input = document.getElementById('userInput');
+        const display = document.getElementById('display');
+        const text = input.value;
+
+        if (!text) return;
+
+        display.innerHTML += `\n<b>أنت:</b> ${text}`;
+        input.value = "";
+        display.innerHTML += `\n<span class="loading" id="loading">جاري معالجة البيانات في السحابة...</span>`;
+
+        try {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${HF_TOKEN}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    inputs: text,
+                    parameters: { max_new_tokens: 500, temperature: 0.7 }
+                })
+            });
+
+            const data = await response.json();
+            document.getElementById('loading').remove();
+
+            if (data.error) {
+                display.innerHTML += `\n<b>النظام:</b> الموديل يتم تحميله (7GB)، انتظر دقيقة ثم حاول مرة أخرى.`;
+            } else {
+                const aiResponse = data[0]?.generated_text || "لا يوجد رد";
+                display.innerHTML += `\n<span style="color: white;"><b>WIZARD:</b> ${aiResponse}</span>`;
+            }
+        } catch (error) {
+            display.innerHTML += `\n<b>خطأ:</b> فشل الاتصال بالسحابة.`;
+            console.error(error);
+        }
+        display.scrollTop = display.scrollHeight;
+    }
+</script>
+
+</body>
+</html>
